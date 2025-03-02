@@ -1,8 +1,6 @@
 using System;
-using Microsoft.Win32;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic; // for List
+using System.ComponentModel.DataAnnotations; // use for Required method
 
 namespace Bangazon.Models;
 
