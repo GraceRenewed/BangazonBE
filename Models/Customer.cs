@@ -22,6 +22,9 @@ public class Customer
     [EmailAddress]
     public string Email { get; set; }
     public string Address { get; set; }
+    public string City { get; set; }
+    public string State { get; set; }
+    public int Zip { get; set; }
     public int OrderId { get; set; }
 
     public User User { get; set; }
