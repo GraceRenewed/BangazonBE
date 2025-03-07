@@ -1,8 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace Bangazon.Models;
+
 public class CustomerPaymentMethod
 {
     public int Id { get; set; }
     [Required]
-    public string CustomerUid { get; set; }  // Foreign key
+    public string CustomerUserUid { get; set; }  // Foreign key
 
     public PaymentType PaymentMethod { get; set; }  // Enum for payment type
 

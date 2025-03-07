@@ -1,15 +1,15 @@
 using System;
-// using System.ComponentModel; // use annotation in enum
 using System.Reflection; // use for DateTime
 using System.ComponentModel.DataAnnotations; // use for DataType/DisplayFormat in date
+
 
 namespace Bangazon.Models;
 
 public class Order
 {
     public int Id { get; set; }
-    public int CustomerUid { get; set; }
-    public int SellerUid { get; set; }
+    public int CustomerUserUid { get; set; }
+    public int SellerUserUid { get; set; }
     public int ProductId { get; set; }
     
     public int ProductTotal { get; set; }
@@ -19,16 +19,16 @@ public class Order
     public int CustomerPaymentMethodId { get; set; }  // Which payment method was used
 
     public Boolean Open { get; set; }
-    [DateType(DataType.Date)]
+    [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-    public DateTime Created { get; set; }
+    public DateTime DateCreated { get; set; }
     
     public Boolean Filled { get; set; }
 
     public Boolean Shipped { get; set; }
-    [DateType(DataType.Date)]
+    [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-    public DateTime Shipped {  get; set; }
+    public DateTime DateShipped {  get; set; }
 
     // Navigation properties
     public Customer Customer { get; set; }

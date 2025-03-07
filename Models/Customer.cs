@@ -25,9 +25,9 @@ public class Customer
     public string City { get; set; }
     public string State { get; set; }
     public int Zip { get; set; }
-    public int OrderId { get; set; }
+    
 
-    public User User { get; set; }
+   // public User User { get; set; }
     public List<Order> Orders { get; set; }
     public List<CustomerPaymentMethod> PaymentMethods { get; set; }
 }

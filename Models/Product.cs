@@ -15,5 +15,5 @@ public class Product
     public string Description { get; set; }
     public string imageUrl { get; set; }
 
-    public User User { get; set; }
+    // public User User { get; set; }
 }
