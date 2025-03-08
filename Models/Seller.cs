@@ -8,18 +8,24 @@ namespace Bangazon.Models;
 
 public class Seller
 {
+    [Key]
+    public required string UserUid { get; set; }
+    
     [Required]
-    public string UserUid { get; set; }
-    [Required]
-    public string SellerUserName { get; set; }
-    public string ImageUrl { get; set; }
+    public required string SellerUserName { get; set; }
+    public string? ImageUrl { get; set; }
+    
     [Required]
     [EmailAddress]
-    public string Email { get; set; }
-    public string City { get; set; }
-    public string StateOrCountry { get; set; }
-    public string ProductId {  get; set; }
-    public Boolean ProductsSold {  get; set; }
+    public required string Email { get; set; }
 
-    public User User { get; set; }
-    public List<Product> Products { get; set; }
+    [Required]
+    public required string City { get; set; }
+
+    [Required]
+    public required string StateOrCountry { get; set; }
+    public Boolean ProductsSold { get; set; }
+
+    // public User User { get; set; }
+    public List<Product> Products { get; set; } = new List<Product>();
+}
