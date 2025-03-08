@@ -8,8 +8,8 @@ namespace Bangazon.Models;
 public class Order
 {
     public int Id { get; set; }
-    public int CustomerUserUid { get; set; }
-    public int SellerUserUid { get; set; }
+    public string CustomerUserUid { get; set; }
+    public string SellerUserUid { get; set; }
     public int ProductId { get; set; }
     
     public int ProductTotal { get; set; }
@@ -28,7 +28,7 @@ public class Order
     public Boolean Shipped { get; set; }
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-    public DateTime DateShipped {  get; set; }
+    public DateTime? DateShipped {  get; set; }
 
     // Navigation properties
     public Customer Customer { get; set; }
