@@ -44,9 +44,9 @@ public class BangazonDbContext : DbContext
         });
         modelBuilder.Entity<Seller>().HasData(new Seller[]
         {
-            new Seller {UserUid = "21", SellerUserName = "Cats R Us", ImageUrl= "https://cdn.pixabay.com/photo/2021/11/22/04/28/animal-6815808_1280.jpg", Email = "cats@mail.com", City = "Cleveland", StateOrCountry = "OH", ProductId = "201", ProductsSold = true},
-            new Seller {UserUid = "22", SellerUserName = "All Pets Food", ImageUrl = "https://cdn.pixabay.com/photo/2014/05/21/18/08/dog-bones-350092_640.jpg", Email = "Petsfood@mail.com", City = "London", StateOrCountry = "England", ProductId = "202", ProductsSold = true},
-            new Seller {UserUid = "23", SellerUserName = "The Bird Store", ImageUrl= "https://cdn.pixabay.com/photo/2020/01/03/22/14/birdhouse-4739277_640.jpg", Email = "birds@mail.com", City = "Austin", StateOrCountry = "TX", ProductId = "203", ProductsSold = false},
+            new Seller {UserUid = "21", SellerUserName = "Cats R Us", ImageUrl= "https://cdn.pixabay.com/photo/2021/11/22/04/28/animal-6815808_1280.jpg", Email = "cats@mail.com", City = "Cleveland", StateOrCountry = "OH", ProductsSold = true},
+            new Seller {UserUid = "22", SellerUserName = "All Pets Food", ImageUrl = "https://cdn.pixabay.com/photo/2014/05/21/18/08/dog-bones-350092_640.jpg", Email = "Petsfood@mail.com", City = "London", StateOrCountry = "England", ProductsSold = true},
+            new Seller {UserUid = "23", SellerUserName = "The Bird Store", ImageUrl= "https://cdn.pixabay.com/photo/2020/01/03/22/14/birdhouse-4739277_640.jpg", Email = "birds@mail.com", City = "Austin", StateOrCountry = "TX", ProductsSold = false},
         });
         modelBuilder.Entity<CustomerPaymentMethod>().HasData(new CustomerPaymentMethod[]
         {
