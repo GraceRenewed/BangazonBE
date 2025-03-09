@@ -10,7 +10,8 @@ public class Product
     
     [Required]
     public required string SellerUserUid { get; set; }
-    
+    public Seller Seller { get; set; }
+
     [Required]
     [StringLength(50, ErrorMessage = "Product name cannot be longer than 50 characters")]
     public required string Name { get; set; }

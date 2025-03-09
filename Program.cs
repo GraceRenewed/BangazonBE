@@ -38,7 +38,9 @@ app.MapGet("/api/customers", (BangazonDbContext db) =>
 
 app.MapGet("/api/customers/{userUid}", (BangazonDbContext db, string userUid) =>
 {
-    return db.Customers.Include(c => c.Orders).SingleOrDefault(c => c.UserUid == userUid);
+    return db.Customers
+        .Include(c => c.Orders)
+        .SingleOrDefault(c => c.UserUid == userUid);
 });
 
 app.MapPost("/api/customers", (BangazonDbContext db, Customer customer) =>
@@ -80,6 +82,77 @@ app.MapPut("/api/customers/{userUid}", (BangazonDbContext db, string userUid, Cu
 
     db.SaveChanges();
     return Results.NoContent();
+});
+
+app.MapGet("/api/sellers", (BangazonDbContext db) =>
+{
+
+    return db.Sellers.ToList();
+});
+
+app.MapGet("/api/sellers/{userUid}", (BangazonDbContext db, string userUid) =>
+{
+    return db.Sellers
+        .Include(c => c.Orders)
+        .Include(c => c.Products)
+        .SingleOrDefault(c => c.UserUid == userUid);
+});
+
+app.MapPost("/api/sellers", (BangazonDbContext db, Seller seller) =>
+{
+    db.Sellers.Add(seller);
+    db.SaveChanges();
+    return Results.Created($"/api/sellers/{seller.UserUid}", seller);
+});
+
+app.MapDelete("/api/sellers/{userUid}", (BangazonDbContext db, string userUid) =>
+{
+    Seller seller = db.Sellers.SingleOrDefault(seller => seller.UserUid == userUid);
+    if (seller == null)
+    {
+        return Results.NotFound();
+    }
+    db.Sellers.Remove(seller);
+    db.SaveChanges();
+    return Results.NoContent();
+
+});
+
+app.MapPut("/api/sellers/{userUid}", (BangazonDbContext db, string userUid, Seller seller) =>
+{
+    Seller sellerToUpdate = db.Sellers.SingleOrDefault(seller => seller.UserUid == userUid);
+    if (sellerToUpdate == null)
+    {
+        return Results.NotFound();
+    }
+    sellerToUpdate.SellerUserName = seller.SellerUserName;
+    sellerToUpdate.ImageUrl = seller.ImageUrl;
+    sellerToUpdate.Email = seller.Email;
+    sellerToUpdate.City = seller.City;
+    sellerToUpdate.StateOrCountry = seller.StateOrCountry;
+    sellerToUpdate.ProductsSold = seller.ProductsSold;
+
+    db.SaveChanges();
+    return Results.NoContent();
+});
+
+app.MapGet("/api/products", (BangazonDbContext db) =>
+{
+
+    return db.Products.ToList();
+});
+
+// app.MapPost("/api/products", (BangazonDbContext db, Product newProd) =>
+// {
+    // db.Products.Add(newProd);
+    // db.SaveChanges();
+    // return Results.Created($"/api/products/{newProd.Id}", newProd);
+// });
+
+app.MapGet("/api/orders", (BangazonDbContext db) =>
+{
+
+    return db.Orders.ToList();
 });
 
 app.Run();
