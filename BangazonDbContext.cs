@@ -37,7 +37,7 @@ public class BangazonDbContext : DbContext
             new Order { Id = 402, CustomerUserUid = "2", SellerUserUid = "22", CustomerPaymentMethodId = 602, ProductId = 202, ProductTotal = 2, 
                 OrderTotal = 10, Open = false, DateCreated = new DateTime(2025/2/25), Filled = true, Shipped = true, DateShipped = new DateTime(2025/3/2)},
         });
-        modelBuilder.Entity<Product>().HasData(new Product[]
+       modelBuilder.Entity<Product>().HasData(new Product[]
         {
             new Product {Id = 201, SellerUserUid = "21", Name = "Cat Toy", Price = 5, Quantity = 5, ImageUrl="https://pixabay.com/photos/cat-toy-to-play-domestic-cat-4994140/", Description = "Your cat will love this"},
             new Product {Id = 202, SellerUserUid = "22", Name = "Dog Treats", Price = 8, Quantity = 1, ImageUrl="https://cdn.pixabay.com/photo/2014/05/21/18/08/dog-bones-350092_640.jpg", Description = "Yummy"},

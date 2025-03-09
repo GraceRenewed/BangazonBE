@@ -28,4 +28,5 @@ public class Seller
 
     // public User User { get; set; }
     public List<Product> Products { get; set; } = new List<Product>();
+    public List<Order> Orders { get; set; } = new List<Order>();
 }
