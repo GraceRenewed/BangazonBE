@@ -26,7 +26,6 @@ public class Seller
     public required string StateOrCountry { get; set; }
     public Boolean ProductsSold { get; set; }
 
-    // public User User { get; set; }
     public List<Product> Products { get; set; } = new List<Product>();
     public List<Order> Orders { get; set; } = new List<Order>();
 }

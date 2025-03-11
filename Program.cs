@@ -32,7 +32,6 @@ if (app.Environment.IsDevelopment())
 
 app.MapGet("/api/customers", (BangazonDbContext db) =>
 {
-    
    return db.Customers.ToList();
 });
 
@@ -86,7 +85,6 @@ app.MapPut("/api/customers/{userUid}", (BangazonDbContext db, string userUid, Cu
 
 app.MapGet("/api/sellers", (BangazonDbContext db) =>
 {
-
     return db.Sellers.ToList();
 });
 
@@ -138,21 +136,59 @@ app.MapPut("/api/sellers/{userUid}", (BangazonDbContext db, string userUid, Sell
 
 app.MapGet("/api/products", (BangazonDbContext db) =>
 {
-
-    return db.Products.ToList();
+    return db.Products
+        .Include(p => p.Seller)
+        .ToList();
 });
 
-// app.MapPost("/api/products", (BangazonDbContext db, Product newProd) =>
-// {
-    // db.Products.Add(newProd);
-    // db.SaveChanges();
-    // return Results.Created($"/api/products/{newProd.Id}", newProd);
-// });
+app.MapPost("/api/products", (BangazonDbContext db, Product newProd) =>
+{
+    try
+    {
+        db.Products.Add(newProd);
+        db.SaveChanges();
+        return Results.Created($"/api/products/{newProd.Id}", newProd);
+    }
+    catch (DbUpdateException)
+    {
+        return Results.BadRequest("Invalid data submitted");
+    }
+});
 
 app.MapGet("/api/orders", (BangazonDbContext db) =>
 {
+    return db.Orders
+        .Include(o => o.Seller)
+        .Include(o => o.Customer)
+        .Include(o => o.Product)
+        .Include(o => o.PaymentMethod)
+        .ToList();
+});
 
-    return db.Orders.ToList();
+app.MapPost("/api/orders", (BangazonDbContext db, Order newOrd) =>
+{   try
+    {
+        db.Orders.Add(newOrd);
+        db.SaveChanges();
+        return Results.Created($"/api/orders/{newOrd.Id}", newOrd);
+    }
+    catch (DbUpdateException)
+    {
+        return Results.BadRequest("Invalid data submitted");
+    }
+});
+
+app.MapDelete("/api/orders/{id}", (BangazonDbContext db, int id) =>
+{
+    Order order = db.Orders.SingleOrDefault(order => order.Id == id);
+    if (order == null)
+    {
+        return Results.NotFound();
+    }
+    db.Orders.Remove(order);
+    db.SaveChanges();
+    return Results.NoContent();
+
 });
 
 app.Run();

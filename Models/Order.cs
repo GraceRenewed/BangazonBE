@@ -1,7 +1,7 @@
 using System;
 using System.Reflection; // use for DateTime
 using System.ComponentModel.DataAnnotations; // use for DataType/DisplayFormat in date
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bangazon.Models;
 
@@ -22,6 +22,8 @@ public class Order
     [Required]
     [DisplayFormat(DataFormatString = "{0:C}")]
     public required decimal OrderTotal { get; set; }
+    
+    [ForeignKey("PaymentMethod")]
     public int CustomerPaymentMethodId { get; set; }  // Which payment method was used
 
     public Boolean Open { get; set; }
