@@ -32,7 +32,7 @@ public class BangazonDbContext : DbContext
         });
         modelBuilder.Entity<Order>().HasData(new Order[]
         {
-            new Order { Id = 401, CustomerUserUid = "1", SellerUserUid = "21", CustomerPaymentMethodId = 601, ProductId = 201, ProductTotal = 1, 
+            new Order { Id = 401, CustomerUserUid = "1", SellerUserUid = "21", CustomerPaymentMethodId = 601, ProductId = 201, ProductTotal = 1,
                 OrderTotal = 5, Open = true, DateCreated = new DateTime(2025/2/28), Filled = false, Shipped = false, DateShipped = null},
             new Order { Id = 402, CustomerUserUid = "2", SellerUserUid = "22", CustomerPaymentMethodId = 602, ProductId = 202, ProductTotal = 2, 
                 OrderTotal = 10, Open = false, DateCreated = new DateTime(2025/2/25), Filled = true, Shipped = true, DateShipped = new DateTime(2025/3/2)},
