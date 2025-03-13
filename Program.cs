@@ -41,6 +41,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors();
+
 app.MapGet("/api/customers", (BangazonDbContext db) =>
 {
    return db.Customers.ToList();
