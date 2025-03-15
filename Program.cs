@@ -5,35 +5,41 @@ using Microsoft.AspNetCore.Http.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddControllers();
+
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy =>
+    options.AddPolicy("AllowFrontend", policy =>
     {
         policy.WithOrigins("http://localhost:3000")
             .AllowAnyMethod()
             .AllowAnyHeader();
+            .AllowCredentials();
     });
 });
 
-// allows passing datetimes without time zone data 
+builder.Services.AddAuthorization();
+
+builder.Services.AddAuthentication(); 
+
+// Enable Legacy Timestamp for PostgreSQL
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-// allows our api endpoints to access the database through Entity Framework Core
+// Add Database Context
 builder.Services.AddNpgsql<BangazonDbContext>(builder.Configuration["BangazonDbConnectionString"]);
 
-// Set the JSON serializer options
+// Configure JSON Serializer
 builder.Services.Configure<JsonOptions>(options =>
 {
     options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Enable Swagger in Development
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -41,7 +47,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors();
+// Enable CORS
+app.UseCors("AllowFrontend");
+
+app.UseAuthorization();
+
+// Map Controllers g)
+app.MapControllers();
 
 app.MapGet("/api/customers", (BangazonDbContext db) =>
 {
