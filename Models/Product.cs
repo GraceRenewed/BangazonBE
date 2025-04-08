@@ -5,8 +5,8 @@ using System.ComponentModel.DataAnnotations; // use for Required method
 namespace Bangazon.Models;
 
 public class Product
-{   
-    public int Id {  get; set; }
+{
+    public int Id { get; set; }
 
     [Required]
     public required string SellerUserUid { get; set; }

@@ -14,7 +14,7 @@ public class Order
     
     [Required]
     public required string SellerUserUid { get; set; }
-    
+  
     public int ProductId { get; set; }
     
     public int ProductTotal { get; set; }
