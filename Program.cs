@@ -233,8 +233,22 @@ app.MapGet("/api/orders", (BangazonDbContext db) =>
         .ToList();
 });
 
+app.MapGet("/api/orders/{id}", (BangazonDbContext db) =>
+{
+    Order order = db.Orders.SingleOrDefault(order => order.Id == id);
+    if (order == null)
+    {
+        return Results.NotFound();
+    }
+    db.Orders.Remove(order);
+    db.SaveChanges();
+    return Results.NoContent();
+
+});
+
 app.MapPost("/api/orders", (BangazonDbContext db, Order newOrd) =>
-{   try
+{
+    try
     {
         db.Orders.Add(newOrd);
         db.SaveChanges();
@@ -244,6 +258,27 @@ app.MapPost("/api/orders", (BangazonDbContext db, Order newOrd) =>
     {
         return Results.BadRequest("Invalid data submitted");
     }
+});
+
+app.MapPut("/api/orders/{id}", (BangazonDbContext db, string id, Orders order) =>
+{
+    Orders orderToUpdate = db.Orders.SingleOrDefault(order => order.Id == id);
+    if (orderToUpdate == null)
+    {
+        return Results.NotFound();
+    }
+    orderToUpdate.ProductId = order.ProductId;
+    orderToUpdate.ProductTotal = order.ProductTotal;
+    orderToUpdate.OrderTotal = order.OrderTotal;
+    orderToUpdate.CustomerPaymentMethodId = order.CustomerPaymentMethodId;
+    orderToUpdate.Open = order.Open;
+    orderToUpdate.DateCreated = order.DateCreated;
+    orderToUpdate.Filled = order.Filled;
+    orderToUpdate.Shipped = order.Shipped;
+    orderToUpdate.DateShipped = order.DateShipped;
+
+    db.SaveChanges();
+    return Results.NoContent();
 });
 
 app.MapDelete("/api/orders/{id}", (BangazonDbContext db, int id) =>
