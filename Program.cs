@@ -16,7 +16,7 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins("http://localhost:3000")
             .AllowAnyMethod()
-            .AllowAnyHeader();
+            .AllowAnyHeader()
             .AllowCredentials();
     });
 });
@@ -166,6 +166,19 @@ app.MapGet("/api/products", (BangazonDbContext db) =>
         .ToList();
 });
 
+app.MapGet("/api/products/{id}", (BangazonDbContext db) =>
+{
+    Product product = db.Products.SingleOrDefault(product => product.Id == id);
+    if (product == null)
+    {
+        return Results.NotFound();
+    }
+    db.Products.Remove(product);
+    db.SaveChanges();
+    return Results.NoContent();
+
+});
+
 app.MapPost("/api/products", (BangazonDbContext db, Product newProd) =>
 {
     try
@@ -178,6 +191,36 @@ app.MapPost("/api/products", (BangazonDbContext db, Product newProd) =>
     {
         return Results.BadRequest("Invalid data submitted");
     }
+});
+
+app.MapPut("/api/products/{id}", (BangazonDbContext db, string id, Product product) =>
+{
+    Product productToUpdate = db.Products.SingleOrDefault(product => product.Id == id);
+    if (productToUpdate == null)
+    {
+        return Results.NotFound();
+    }
+    productToUpdate.Name = product.Name;
+    productToUpdate.Quantity = product.Quantity;
+    productToUpdate.Price = product.Price;
+    productToUpdate.Description = product.Description;
+    productToUpdate.ImageUrl = product.ImageUrl;
+
+
+    db.SaveChanges();
+    return Results.NoContent();
+});
+
+app.MapDelete("/api/products/{id}", (BangazonDbContext db, string id) =>
+{
+    Product product = db.Sellers.SingleOrDefault(product => product.Id == id);
+    if (product == null)
+    {
+        return Results.NotFound();
+    }
+    db.Products.Remove(product);
+    db.SaveChanges();
+    return Results.NoContent();
 });
 
 app.MapGet("/api/orders", (BangazonDbContext db) =>
